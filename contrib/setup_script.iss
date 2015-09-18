@@ -3,7 +3,10 @@
 
 #define sourceFolder "..\..\namecore-release"
 #define progname "NamecoinCore"
+
+; this is necessary so that the link name is the same as in the client
 #define autostartname "Namecoin"
+
 #define exefile "namecoin-qt.exe"
 
 [Messages]
@@ -23,6 +26,11 @@ SolidCompression=yes
 OutputDir={#sourceFolder}
 OutputBaseFilename={#progname}_{#version}_setup
 
+[InstallDelete]
+; clean up any autostart links for a fresh start
+Type: files; Name: "{commonstartup}\{#autostartname}.lnk"
+Type: files; Name: "{userstartup}\{#autostartname}.lnk"
+
 [Files]
 Source: "{#sourceFolder}\namecoin-qt.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#sourceFolder}\namecoind.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -30,7 +38,7 @@ Source: "{#sourceFolder}\namecoin-cli.exe"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#sourceFolder}\namecoin-tx.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Tasks]
-Name: startup; Description: "AAutomatically &start on login (current user)"; GroupDescription: "Autostart:";  Flags: unchecked;
+Name: startup; Description: "Automatically &start on login (current user)"; GroupDescription: "Autostart:";  Flags: unchecked;
 Name: desktopicon; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
 Name: desktopicon\common; Description: "For all users"; GroupDescription: "Additional icons:"; Flags: exclusive unchecked;
 Name: desktopicon\user; Description: "For the current user only"; GroupDescription: "Additional icons:"; Flags: exclusive;
